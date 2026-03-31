@@ -1,0 +1,10 @@
+fastapi
+uvicorn
+streamlit
+sentence-transformers
+faiss-cpu
+transformers
+torch
+peft
+datasets
+scikit-learn
