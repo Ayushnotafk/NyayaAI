@@ -9,14 +9,14 @@ if st.button("Analyze"):
     res = requests.post("http://127.0.0.1:8000/analyze", params={"text": text})
     data = res.json()
 
-    st.subheader("Argument")
-    st.write(data["argument"])
+    st.subheader("🧠 Nyaya Reasoning")
 
-    st.subheader("Nyaya Mapping")
-    st.write(data["nyaya"])
+    st.write("Paksha:", data["nyaya"]["paksha"])
+    st.write("Hetu:", data["nyaya"]["hetu"])
+    st.write("Vyapti:", data["nyaya"]["vyapti"])
 
-    st.subheader("Inference")
+    st.subheader("⚖️ Inference")
     st.write(data["inference"])
 
-    st.subheader("Fallacy")
-    st.write(data["fallacy"])
+    st.subheader("📖 Explanation")
+    st.write(data["explanation"])
