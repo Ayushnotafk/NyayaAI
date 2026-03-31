@@ -1,35 +1,29 @@
-import joblib
-
-model = joblib.load("models/model.pkl")
-vectorizer = joblib.load("models/vectorizer.pkl")
-
-def classify_argument(text):
-    X = vectorizer.transform([text])
-    pred = model.predict(X)[0]
-
-    # If model says it's not an argument
-    if pred == 0:
-        return {
-            "claim": text,
-            "premise": ""
-        }
-
-    # If it's an argument → extract
+def extract_argument(text):
     if "because" in text:
         parts = text.split("because")
+
+        part1 = parts[0].strip()
+        part2 = parts[1].strip()
+
+        # Rule-based priority (strong logic)
         return {
-            "claim": parts[0].strip(),
-            "premise": parts[1].strip()
+            "claim": part1,
+            "premise": part2
         }
 
     if "since" in text:
         parts = text.split("since")
+
         return {
             "claim": parts[0].strip(),
             "premise": parts[1].strip()
         }
 
-    return {
-        "claim": text,
-        "premise": ""
-    }
+    # fallback ML
+    X = vectorizer.transform([text])
+    pred = model.predict(X)[0]
+
+    if pred == 1:
+        return {"claim": text, "premise": ""}
+    else:
+        return {"claim": "", "premise": text}   
