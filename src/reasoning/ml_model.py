@@ -1,14 +1,29 @@
-from transformers import pipeline
+import joblib
 
-# simple NLP pipeline
-classifier = pipeline("text-classification")
+model = joblib.load("models/model.pkl")
+vectorizer = joblib.load("models/vectorizer.pkl")
 
 def classify_argument(text):
-    result = classifier(text)[0]
+    X = vectorizer.transform([text])
+    pred = model.predict(X)[0]
 
-    # fake mapping (starter level)
-    if "because" in text or "since" in text:
-        parts = text.split("because") if "because" in text else text.split("since")
+    # If model says it's not an argument
+    if pred == 0:
+        return {
+            "claim": text,
+            "premise": ""
+        }
+
+    # If it's an argument → extract
+    if "because" in text:
+        parts = text.split("because")
+        return {
+            "claim": parts[0].strip(),
+            "premise": parts[1].strip()
+        }
+
+    if "since" in text:
+        parts = text.split("since")
         return {
             "claim": parts[0].strip(),
             "premise": parts[1].strip()

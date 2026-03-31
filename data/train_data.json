@@ -1,0 +1,30 @@
+[
+    {
+        "text": "Smoking is harmful because it causes cancer",
+        "label": 1
+    },
+    {
+        "text": "There is fire because there is smoke",
+        "label": 1
+    },
+    {
+        "text": "He passed because he studied hard",
+        "label": 1
+    },
+    {
+        "text": "The ground is wet because it rained",
+        "label": 1
+    },
+    {
+        "text": "I like pizza",
+        "label": 0
+    },
+    {
+        "text": "Today is a sunny day",
+        "label": 0
+    },
+    {
+        "text": "She is very happy",
+        "label": 0
+    }
+]
