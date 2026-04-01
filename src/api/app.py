@@ -1,4 +1,6 @@
 from fastapi import FastAPI
+from pydantic import BaseModel
+
 from src.reasoning.argument_miner import extract_argument
 from src.reasoning.nyaya_mapper import map_to_nyaya
 from src.reasoning.inference_engine import infer
@@ -7,8 +9,14 @@ from src.reasoning.explainer import explain
 
 app = FastAPI()
 
+class InputText(BaseModel):
+    text: str
+
 @app.post("/analyze")
-def analyze(text: str):
+def analyze(data: InputText):
+
+    text = data.text
+
     arg = extract_argument(text)
     nyaya = map_to_nyaya(arg)
     result = infer(nyaya)
@@ -16,9 +24,9 @@ def analyze(text: str):
     explanation = explain(nyaya, result)
 
     return {
-    "argument": arg,
-    "nyaya": nyaya,
-    "inference": result,
-    "fallacy": fallacy,
-    "explanation": explanation
-}
+        "argument": arg,
+        "nyaya": nyaya,
+        "inference": result,
+        "fallacy": fallacy,
+        "explanation": explanation
+    }

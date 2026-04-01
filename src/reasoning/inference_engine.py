@@ -3,22 +3,16 @@ def infer(nyaya_obj):
     paksha = nyaya_obj["paksha"].lower()
     vyapti = nyaya_obj["vyapti"].lower()
 
-    # valid case
-    if "smoke" in hetu and "fire" in paksha:
-        return "Valid Inference (Nyaya)"
-
-    if "cancer" in hetu and "harmful" in paksha:
-        return "Valid Inference (Nyaya)"
-
-    if "rain" in hetu and "wet" in paksha:
-        return "Valid Inference (Nyaya)"
-
-    # reverse reasoning
+    # ❌ reverse reasoning check (keep this)
     if "fire" in hetu and "smoke" in paksha:
         return "Fallacy: Reverse reasoning"
 
-    # missing relation
+    # ❌ missing relation
     if "unknown" in vyapti:
         return "Fallacy: No Vyapti (no relation found)"
+
+    # ✅ VALID CASE (MAIN FIX)
+    if vyapti and vyapti != "unknown relation":
+        return "Valid Inference (Nyaya)"
 
     return "Uncertain inference"
